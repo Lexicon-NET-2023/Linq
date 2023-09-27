@@ -4,10 +4,28 @@
     {
         static void Main(string[] args)
         {
-            var persons = GetPersons();
+            var persons = GetPersons().ToArray();
+
+            var allPersonsOver20 = persons.Where(p => p.Age > 20).Select(p => p.Name);
+            var allPersonsOver202 = persons.Where(IsOver20);
+
+            var allPersonsOver30 = persons.OuersWhere(p => p.Age > 30);
+            var allPersonsOver302 = persons.OuersWhere(IsOver20);
+                
+
+            foreach ( var person in allPersonsOver30)
+            {
+                Console.WriteLine(person);
+            }
         }
 
-        private static IEnumerable<Person> GetPersons()
+
+        private static bool IsOver20(Person person)
+        {
+            return person.Age > 20;
+        }
+
+        private static List<Person> GetPersons()
         {
             return new List<Person>
                 {
