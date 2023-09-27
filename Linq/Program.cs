@@ -1,4 +1,7 @@
-﻿namespace Linq
+﻿using System.Threading.Channels;
+using System.Xml;
+
+namespace Linq
 {
     internal class Program
     {
@@ -17,12 +20,36 @@
             {
                 Console.WriteLine(person);
             }
+
+            var ages = persons.Where(p => p.Name == "Pelle")
+                              .Select(p => p.Age)
+                              .Sum();
+
+            IEnumerable<PersonDto> dtos = persons.Where(p => p.Name == "Pelle")
+                              .Select(p => new PersonDto
+                              {
+                                  Name = p.Name,
+                                  NamesLength = p.Name.Length
+                              });
+
+
+            var persons2 = GetPersons().ToList();
+
+            persons2.ForEach(person => Console.WriteLine(person));
+            persons2.ForEach(Console.WriteLine);
+            persons2.ForEach(Test);
+
         }
 
 
         private static bool IsOver20(Person person)
         {
             return person.Age > 20;
+        }  
+        
+        private static void Test(Person person)
+        {
+            Console.WriteLine(person);
         }
 
         private static List<Person> GetPersons()
